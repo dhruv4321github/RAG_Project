@@ -93,7 +93,7 @@ Upload Docs → System Indexes & Embeds → Advisor Asks Questions → RAG Retri
 | Layer       | Technology                          |
 |-------------|-------------------------------------|
 | **Backend** | Python 3.11, FastAPI                |
-| **AI/LLM**  | LangChain, **Ollama** (Llama 3.1 / Mistral — free) or OpenAI (paid) |
+| **AI/LLM**  | LangChain, Ollama (Llama 3.1 / Mistral — free) or OpenAI (paid) |
 | **Embeddings** | `nomic-embed-text` via Ollama (free) or OpenAI `text-embedding-3-small` |
 | **Vector DB** | PostgreSQL + pgvector extension    |
 | **Frontend** | React 18, CSS                      |
@@ -185,9 +185,9 @@ Other great free options: `mistral`, `gemma2`, `phi3`, `llama3.1:70b` (if you ha
 cp .env.example .env
 ```
 
-The default config uses Ollama (free). No API key needed! If you want OpenAI instead, edit `.env`:
+The default config uses OpenAI (paid). If you want Ollama (free) instead, edit `.env`. No API key needed!:
 ```env
-LLM_PROVIDER=openai
+LLM_PROVIDER=ollama
 OPENAI_API_KEY=sk-your-key-here
 ```
 
@@ -216,11 +216,11 @@ All configuration is managed via environment variables (see `.env.example`):
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `LLM_PROVIDER` | `ollama` (free, local) or `openai` (paid) | `ollama` |
+| `LLM_PROVIDER` | `ollama` (free, local) or `openai` (paid) | `openai` |
 | `OLLAMA_MODEL` | Ollama model name | `llama3.1` |
 | `OLLAMA_EMBEDDING_MODEL` | Ollama embedding model | `nomic-embed-text` |
 | `OPENAI_API_KEY` | OpenAI key (only if provider=openai) | — |
-| `OPENAI_MODEL` | OpenAI model (only if provider=openai) | `gpt-4` |
+| `OPENAI_MODEL` | OpenAI model (only if provider=openai) | `gpt-4.1-mini` |
 | `DATABASE_URL` | PostgreSQL connection string | `postgresql://postgres:postgres@db:5432/advisor_rag` |
 | `CHUNK_SIZE` | Document chunk size (chars) | `1000` |
 | `CHUNK_OVERLAP` | Overlap between chunks | `200` |
@@ -348,7 +348,7 @@ Every interaction is logged to the `audit_logs` table:
   "retrieved_chunks": ["chunk_id_1", "chunk_id_2"],
   "llm_prompt": "System: You are a financial advisor...",
   "llm_response": "Based on the documents, the client has a moderate...",
-  "model_used": "gpt-4",
+  "model_used": "gpt-4.1-mini",
   "tokens_used": 1250,
   "response_time_ms": 2340
 }
