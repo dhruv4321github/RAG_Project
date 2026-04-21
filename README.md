@@ -13,6 +13,7 @@ A production-grade GenAI tool that helps financial advisors answer client questi
 
 ## 📋 Table of Contents
 
+- [Demo](#demo)
 - [Overview](#overview)
 - [Architecture](#architecture)
 - [Tech Stack](#tech-stack)
@@ -26,6 +27,10 @@ A production-grade GenAI tool that helps financial advisors answer client questi
 - [Future Enhancements](#future-enhancements)
 
 ---
+
+## Demo
+![Link](https://rag-project-ivory.vercel.app/)
+May take some time to load
 
 ## Overview
 
