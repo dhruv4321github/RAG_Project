@@ -29,7 +29,7 @@ A production-grade GenAI tool that helps financial advisors answer client questi
 ---
 
 ## Demo
-![Link](https://rag-project-ivory.vercel.app/)
+[Link](https://rag-project-ivory.vercel.app/)
 May take some time to load
 
 ## Overview
