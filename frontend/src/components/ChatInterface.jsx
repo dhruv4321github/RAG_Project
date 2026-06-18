@@ -116,11 +116,11 @@ function ChatInterface({ documents }) {
               <button onClick={() => setInput('What is the client\'s current asset allocation?')}>
                 "What is the client's current asset allocation?"
               </button>
-              <button onClick={() => setInput('Are there any concentration risks in the portfolio?')}>
-                "Are there any concentration risks in the portfolio?"
+              <button onClick={() => setInput('What was the yearly revenue?')}>
+                "What was the yearly revenue?"
               </button>
-              <button onClick={() => setInput('What is the client\'s stated risk tolerance?')}>
-                "What is the client's stated risk tolerance?"
+              <button onClick={() => setInput('What was the diluted EPS?')}>
+                "What was the diluted EPS?"
               </button>
             </div>
           </div>
