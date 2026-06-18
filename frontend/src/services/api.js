@@ -19,6 +19,15 @@ const api = axios.create({
   },
 });
 
+// ── System Endpoints ───────────────────────────
+
+/**
+ * Lightweight liveness probe.
+ * Used on app load to detect when the backend has finished cold-starting
+ * (Render's free tier spins the service down after inactivity).
+ */
+export const pingHealth = () => api.get('/health', { timeout: 5000 });
+
 // ── Document Endpoints ─────────────────────────
 
 /** Upload a document file (PDF, DOCX, TXT) */

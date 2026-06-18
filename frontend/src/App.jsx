@@ -13,7 +13,7 @@ import DocumentUpload from './components/DocumentUpload';
 import ChatInterface from './components/ChatInterface';
 import ReportPanel from './components/ReportPanel';
 import AuditLog from './components/AuditLog';
-import { getDocuments } from './services/api';
+import { getDocuments, pingHealth } from './services/api';
 
 const TABS = [
   { id: 'documents', label: '📄 Documents', icon: '📄' },
@@ -25,8 +25,8 @@ const TABS = [
 function App() {
   const [activeTab, setActiveTab] = useState('documents');
   const [documents, setDocuments] = useState([]);
+  const [backendReady, setBackendReady] = useState(false);
 
-  // Fetch documents on mount and when tab changes
   const refreshDocuments = async () => {
     try {
       const res = await getDocuments();
@@ -36,9 +36,35 @@ function App() {
     }
   };
 
+  // On first load the backend may be cold-starting (Render's free tier spins
+  // down after inactivity and takes ~30–60s to wake). Poll /health until it
+  // responds so we can show a "please wait" banner instead of a broken UI.
   useEffect(() => {
-    refreshDocuments();
-  }, [activeTab]);
+    let cancelled = false;
+
+    const waitForBackend = async () => {
+      while (!cancelled) {
+        try {
+          await pingHealth();
+          if (!cancelled) setBackendReady(true);
+          return;
+        } catch {
+          // Still waking up — wait a few seconds and retry.
+          await new Promise((resolve) => setTimeout(resolve, 3000));
+        }
+      }
+    };
+
+    waitForBackend();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // Fetch documents once the backend is awake, and whenever the tab changes.
+  useEffect(() => {
+    if (backendReady) refreshDocuments();
+  }, [activeTab, backendReady]);
 
   return (
     <div className="app">
@@ -49,6 +75,21 @@ function App() {
           <p>Secure RAG-powered document intelligence for financial advisors</p>
         </div>
       </header>
+
+      {/* Cold-start notice: shown until the backend responds to /health */}
+      {!backendReady && (
+        <div className="wakeup-banner" role="status" aria-live="polite">
+          <div className="spinner" />
+          <div>
+            <strong>Waking up the server…</strong>
+            <span>
+              {' '}This can take 1–2 minutes on the first visit since the
+              backend goes to sleep when idle. Hang tight — the app will load
+              automatically once it's ready.
+            </span>
+          </div>
+        </div>
+      )}
 
       {/* Tab Navigation */}
       <nav className="tab-nav">

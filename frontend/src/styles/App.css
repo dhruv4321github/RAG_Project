@@ -167,6 +167,37 @@ body {
   to { transform: rotate(360deg); }
 }
 
+/* ── Backend cold-start banner ───────────────── */
+
+.wakeup-banner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 1100px;
+  margin: 1.5rem auto 0;
+  padding: 1rem 1.25rem;
+  background: #fffaf0;
+  border: 1px solid var(--warning);
+  border-left: 4px solid var(--warning);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.wakeup-banner .spinner {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.wakeup-banner strong {
+  color: var(--primary);
+}
+
+.wakeup-banner span {
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
 /* ── Document List ──────────────────────────── */
 
 .document-list {
